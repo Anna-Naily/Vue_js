@@ -1,7 +1,10 @@
 import Vue from "vue";
 import App from "./App.vue";
+import List from "./components/ListComp.vue";
+
 Vue.config.productionTip = false;
 
+Vue.component("List", List);
 new Vue({
   render: (h) => h(App),
 }).$mount("#app");
