@@ -72,6 +72,7 @@ font-size: 15px;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 20px;
+    transition: 0.2s
 }
 .addNewCost:hover{
    background-color: rgba(73, 206, 73, 0.616);

@@ -1,84 +1,38 @@
 <template>
-<div>
+  <div>
     <PaymentList :list="responseData" />
-    <PaymentForm @addNewPayment="addNewPayment"/>
-</div>
+    <PaymentForm />
+  </div>
 </template>
 
 <script>
-import PaymentList from "../components/PaymentListComp"
-import PaymentForm from "../components/PaymentFormComp"
+import PaymentList from "../components/PaymentListComp";
+import PaymentForm from "../components/PaymentFormComp";
+import { mapMutations, mapActions } from "vuex";
 export default {
-    name: "List",
-    components: {
-        PaymentList,
-        PaymentForm
-    },
-    data() {
-        return {
-            responseData: [{    id: 1,
-                    date: "28.03.2020",
-                    category: "Food",
-                    value: 169
-                },
-                {   id: 2,
-                    date: "24.03.2020",
-                    category: "Transport",
-                    value: 350
-                },
-                {   id: 3,
-                    date: "24.03.2020",
-                    category: "Food",
-                    value: 532
-                }, 
-                {   id: 4,
-                    date: "21.03.2020",
-                    category: "Housing",
-                    value: 273
-                },
-                {   id: 5,
-                    date: "21.03.2020",
-                    category: "Healthcare",
-                    value: 545
-                },
-                {   id: 6,
-                    date: "16.03.2020",
-                    category: "Housing",
-                    value: 502
-                },
-                {   id: 7,
-                    date: "14.03.2020",
-                    category: "Clothing",
-                    value: 692
-                },
-                {   id: 8,
-                    date: "02.03.2020",
-                    category: "Food",
-                    value: 143
-                },
-                {   id: 9,
-                    date: "01.03.2020",
-                    category: "Housing",
-                    value: 339
-                },
-                {   id: 10,
-                    date: "28.02.2020",
-                    category: "Clothing",
-                    value: 913
-                }
+  name: "List",
+  components: {
+    PaymentList,
+    PaymentForm,
+  },
+  data() {
+    return {
+      responseData: [],
+      renderPages: [],
+    };
+  },
+  mounted() {
+    this.getUsers();
+  },
+  methods: {
+    ...mapMutations("users", ["setUsers"]),
+    ...mapActions("users", ["getUsers"]),
 
-            ],
-            renderPages: []
-        }
+    addNewPayment(data) {
+      this.responseData = [...this.responseData, data];
     },
-      methods:{
-    addNewPayment (data){
-      this.responseData=[...this.responseData, data]
-    }
-  }
-}
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
