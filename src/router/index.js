@@ -3,11 +3,15 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 const routes = [
-  // {
-  //   path: "list",
-  //   name: "List",
-  //   component: () => import("../components/ListComp"),
-  // },
+  {
+    path: "/",
+    name: "Main",
+  },
+  {
+    path: "*",
+    name: "404",
+    component: () => import("../components/404"),
+  },
   {
     path: "/form",
     name: "Form",

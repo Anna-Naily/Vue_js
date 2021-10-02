@@ -32,7 +32,14 @@ export default {
     mounted() {
         this.category = this.$route.query.category;
     },
+    watch: {
+        $route(to, from) {
+            if (to != from) {
+                this.category = this.$route.query.category
+            }
 
+        }
+    },
 
     methods: {
         addCategory(category) {
@@ -61,8 +68,8 @@ export default {
 }
 
 .selectCategory {
-
-    padding: 10px 43px;
+    text-align: left;
+    padding:10px 79px 10px 7px;
     border: 1px solid rgb(216, 213, 213);
     border-radius: 5px;
     font-size: 14px;
