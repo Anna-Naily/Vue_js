@@ -74,13 +74,17 @@ export default {
 </script>
 
 <style scoped>
+.text{
+  width: 50px;
+  font-size: 13px;
+}
 .payment-block {
   display: flex;
   justify-content: space-between;
   padding-left: 10px;
   border-top: 1px solid rgba(0, 0, 0, 0.103);
-}
 
+}
 .paginationBlock {
   display: flex;
   justify-content: space-between;

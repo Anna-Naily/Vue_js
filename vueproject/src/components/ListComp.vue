@@ -1,19 +1,20 @@
 <template>
   <div>
     <PaymentList :list="responseData" />
-    <PaymentForm />
+
+    
   </div>
 </template>
 
 <script>
 import PaymentList from "../components/PaymentListComp";
-import PaymentForm from "../components/PaymentFormComp";
+//import PaymentForm from "../components/PaymentFormComp";
 import { mapMutations, mapActions } from "vuex";
 export default {
   name: "List",
   components: {
-    PaymentList,
-    PaymentForm,
+    PaymentList
+   // PaymentForm,
   },
   data() {
     return {

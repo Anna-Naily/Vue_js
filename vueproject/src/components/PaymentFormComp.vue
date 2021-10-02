@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-show="$parent.$parent.toShow" class="formPayment">
+    <div  class="formPayment">
      <Category @setCategory="setCategory"/>
       <input
         type="text"
@@ -33,11 +33,18 @@ export default {
       date: "",
     };
   },
+  mounted(){
+   this.value = this.$route.query.value;
+   if(this.value!=null){
+     this.date=this.getDate()
+   }
+  },
+ 
   computed: {
     getCurrentDate() {
       const today = new Date();
       const d = today.getDate();
-      const m = today.getMonth();
+      const m = today.getMonth()+1;
       const y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
@@ -51,6 +58,13 @@ export default {
         date: this.date || this.getCurrentDate,
       };
       this.setNewUser(data);
+    },
+    getDate() {
+      const today = new Date();
+      const d = today.getDate();
+      const m = today.getMonth()+1;
+      const y = today.getFullYear();
+      return `${d}.${m}.${y}`;
     },
     setCategory(data){
 this.category=data
