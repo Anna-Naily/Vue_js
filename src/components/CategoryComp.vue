@@ -34,9 +34,7 @@ export default {
     },
     watch: {
         $route(to, from) {
-            if (to != from) {
-                this.category = this.$route.query.category
-            }
+            if (to !== from) this.category = this.$route.query.category
 
         }
     },

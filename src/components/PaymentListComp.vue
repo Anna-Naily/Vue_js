@@ -2,11 +2,16 @@
 <div>
     <div class="listBlock">
         <div class="payment-block" v-for="item in renderData" :key="item.value">
-            <p class="text">{{ item.id }}</p>
-            <p class="text">{{ item.date }}</p>
-            <p class="text">{{ item.category }}</p>
-            <p class="text">{{ item.value }}</p>
+            <p class="text text-list">{{ item.id }}</p>
+            <p class="text text-list">{{ item.date }}</p>
+            <p class="text text-list">{{ item.category }}</p>
+            <p class="text text-list">{{ item.value }}</p>
+            <i @click="$keks.toShowMenu(item.id)" class="fas fa-ellipsis-v text-list"></i>
+            <div class="comp" v-if="item.id==getId">
+                <MyPlugin :id="windowId" />
+            </div>
         </div>
+
     </div>
     <div class="paginationBlock">
         <i @click="prevPage" class="fas fa-chevron-left paginationEl"></i>
@@ -20,26 +25,36 @@
 import {
     mapGetters
 } from "vuex";
+import MyPlugin from "./MyPlugin.vue"
 export default {
     name: "PaymentList",
+    components: {
+        MyPlugin
+    },
 
     data() {
         return {
             pages: [1],
             chosenPage: 1,
             size: 5,
+            windowId: 0,
+
         };
     },
     methods: {
-        nextPage() {
-            if (this.chosenPage != this.pageCount.length) {
-                this.chosenPage++;
+        openWindow(id) {
+
+            if (this.windowId == id) {
+                this.windowId = 0
+            } else {
+                this.windowId = id
             }
         },
+        nextPage() {
+            if (this.chosenPage !== this.pageCount.length) this.chosenPage++;
+        },
         prevPage() {
-            if (this.chosenPage > 1) {
-                this.chosenPage--;
-            }
+            if (this.chosenPage > 1) this.chosenPage--;
         },
         currentPage(number) {
             this.chosenPage = number;
@@ -47,6 +62,9 @@ export default {
         ...mapGetters("users", ["getUsers"]),
     },
     computed: {
+        getId() {
+            return this.windowId
+        },
         pageCount() {
             let pagesLength = this.getUsers().length;
             let pagesSize = this.size;
@@ -66,6 +84,9 @@ export default {
             return this.getUsers().slice(start, end);
         },
     },
+    mounted() {
+        this.$keks.EventBus.$on("toShowMenu", this.openWindow)
+    },
 };
 </script>
 
@@ -75,12 +96,23 @@ export default {
     font-size: 13px;
 }
 
+.text:first-child {
+    margin-right: -150px;
+}
+
 .payment-block {
     display: flex;
     justify-content: space-between;
     padding-left: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.103);
+    position: relative;
+}
 
+.comp {
+    position: absolute;
+    z-index: 1;
+    left: 530px;
+    top: 35px;
 }
 
 .paginationBlock {
@@ -97,6 +129,7 @@ export default {
 }
 
 .paginationEl {
+    padding-top: 2px;
     cursor: pointer;
     transition: 0.2s
 }
@@ -105,7 +138,9 @@ export default {
     color: rgb(13, 146, 207);
 }
 
-.fas {
-    padding-top: 2px;
+.fa-ellipsis-v {
+    padding-top: 11px;
+    cursor: pointer;
+    margin-left: -155px;
 }
 </style>

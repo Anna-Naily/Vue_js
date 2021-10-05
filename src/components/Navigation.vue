@@ -13,7 +13,7 @@
         </div>
         <List />
     </div>
-    <router-view />
+   <transition name="fade"> <router-view /> </transition>
 </div>
 </template>
 
@@ -57,11 +57,20 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
+}
 .containerList {
     max-width: 650px;
     margin-left: 50px;
     margin-top: 30px;
 
+}
+.text:first-child{
+    margin-right: -150px;
 }
 
 .header-menu {
@@ -77,7 +86,7 @@ export default {
 }
 
 .text {
-    width: 50px;
+    width: 87px;
     font-size: 13px;
 }
 

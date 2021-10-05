@@ -13,6 +13,19 @@ const mutations = {
   addNewUser(state, user) {
     state.users.push(user);
   },
+  deleteUser(state, user) {
+    for (let i = 0; i < state.users.length; i++) {
+      if (state.users[i].id === user) state.users.splice(i, 1);
+    }
+  },
+  changeUser(state, obj) {
+    for (let i = 0; i < state.users.length; i++) {
+      if (state.users[i].id === obj.id) {
+        state.users[i].category = obj.category;
+        state.users[i].value = obj.value;
+      }
+    }
+  },
 };
 const actions = {
   getUsers({ commit }) {
@@ -26,6 +39,12 @@ const actions = {
   },
   setNewUser({ commit }, user) {
     commit("addNewUser", user);
+  },
+  deleteUser({ commit }, user) {
+    commit("deleteUser", user);
+  },
+  changeUser({ commit }, user) {
+    commit("changeUser", user);
   },
 };
 

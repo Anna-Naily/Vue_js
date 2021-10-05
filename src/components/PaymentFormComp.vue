@@ -31,15 +31,13 @@ export default {
     },
     mounted() {
         this.value = this.$route.query.value;
-        if (this.value != null) {
-            this.date = this.getDate()
-        }
+        if (this.value !== null) this.date = this.getDate()
+
     },
     watch: {
         $route(to, from) {
-            if (to != from) {
-                this.value = this.$route.query.value
-            }
+            if (to !== from) this.value = this.$route.query.value
+
 
         }
     },
@@ -58,12 +56,19 @@ export default {
     methods: {
         addElement() {
             const data = {
-                id: this.getUsers().length + 1,
+                id: this.getNextId(),
                 value: this.value,
                 category: this.category,
                 date: this.date || this.getCurrentDate,
             };
             this.setNewUser(data);
+        },
+        //метод, задающий след. id
+        getNextId(){
+            let nextId = 1;
+            if(this.getUsers().length > 0){
+                return this.getUsers()[this.getUsers().length-1].id+1;
+            } else return nextId;
         },
         closeForm() {
             this.$router.push({
