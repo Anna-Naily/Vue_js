@@ -1,16 +1,18 @@
 <template>
 <div id="app">
+    <Calculator v-if="0"/>
     <Navigation />
 </div>
 </template>
 
 <script>
 import Navigation from "./components/Navigation.vue"
-
+import Calculator from "./components/Calculator.vue"
 export default {
     name: 'App',
     components: {
         Navigation,
+        Calculator
     },
     mounted() {
         this.$keks.EventBus.$on("hello", this.helloHandler)

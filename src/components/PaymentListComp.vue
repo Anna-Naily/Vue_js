@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="listBlock">
-        <div class="payment-block" v-for="item in renderData" :key="item.value">
+        <div class="payment-block" v-for="item in renderData" :key="item.id">
             <p class="text text-list">{{ item.id }}</p>
             <p class="text text-list">{{ item.date }}</p>
             <p class="text text-list">{{ item.category }}</p>

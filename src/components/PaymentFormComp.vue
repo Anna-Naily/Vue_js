@@ -77,8 +77,10 @@ export default {
         },
         getDate() {
             const today = new Date();
-            const d = today.getDate();
-            const m = today.getMonth() + 1;
+            let d = today.getDate();
+             if (d < 10) d = "0" + d
+            let m = today.getMonth() + 1;
+            if (m < 10) m = "0" + m
             const y = today.getFullYear();
             return `${d}.${m}.${y}`;
         },
