@@ -74,6 +74,7 @@ export default {
 }
 
 .addCategoryBtn {
+    margin-left: 10px;
     border: none;
     background: none;
     color: rgb(73, 206, 73);
@@ -100,6 +101,7 @@ export default {
 }
 
 .inputButton {
+    margin-left: 10px;
     border: none;
     background: none;
     color: rgb(73, 206, 73);

@@ -1,110 +1,147 @@
 <template>
-<div>
-    <router-link class="addNewCost" to="/form">ADD NEW COST +</router-link>
-    <button @click="addFood" class="addNewCost">ADD FOOD</button>
-    <button @click="addTransport" class="addNewCost">ADD TRANSPORT</button>
-    <button @click="addEnt" class="addNewCost">ADD ENTERTAINMENT</button>
-    <div class="containerList">
-        <div class="header-menu">
-            <p class="text">#</p>
-            <p class="text">Date</p>
-            <p class="text">Category</p>
-            <p class="text">Value</p>
-        </div>
-        <List />
-    </div>
-   <transition name="fade"> <router-view /> </transition>
-</div>
+<v-app>
+    <v-app-bar class="flex-grow-0" color="primary">
+        <v-btn color="white" elevation="4" large plain rounded>
+            <router-link class="addNewCost addNewCost__color text-button" to="/form">ADD NEW COST +</router-link>
+        </v-btn>
+        <v-btn color="white" elevation="4" large plain rounded @click="addFood" class="addNewCost text-button">ADD FOOD</v-btn>
+        <v-btn color="white" elevation="4" large plain rounded @click="addTransport" class="addNewCost text-button">ADD TRANSPORT</v-btn>
+        <v-btn color="white" elevation="4" large plain rounded @click="addEnt" class="addNewCost text-button">ADD ENTERTAINMENT</v-btn>
+    </v-app-bar>
+    <v-main>
+      <div class="fff">
+            <div class="containerList">
+                <v-row class="header-menu">
+                    <v-col :cols="2" class="text text-menu">#</v-col>
+                    <v-col :cols="4" class="text text-menu">Date</v-col>
+                    <v-col :cols="4" class="text text-menu">Category</v-col>
+                    <v-col class="text text-menu">Value</v-col>
+                </v-row>
+                <List />
+            </div>
+            <Diagram />
+            </div>
+            <transition name="fade">
+                <router-view />
+            </transition>
+
+            
+
+    </v-main>
+</v-app>
 </template>
 
 <script>
-import List from "./ListComp.vue"
+import Diagram from "./DiagramComp.vue";
+import List from "./ListComp.vue";
 export default {
-    name: "Navigation",
-    components: {
-        List
+  name: "Navigation",
+  components: {
+    List,
+    Diagram,
+  },
+  methods: {
+    addFood() {
+      this.$router.push({
+        name: "Form",
+        query: {
+          category: "Food",
+          value: "200",
+        },
+      });
     },
-    methods: {
-        addFood() {
-            this.$router.push({
-                name: 'Form',
-                query: {
-                    category: "Food",
-                    value: "200"
-                }
-            });
+    addTransport() {
+      this.$router.push({
+        name: "Form",
+        query: {
+          category: "Transport",
+          value: "50",
         },
-        addTransport() {
-            this.$router.push({
-                name: 'Form',
-                query: {
-                    category: "Transport",
-                    value: "50"
-                }
-            });
+      });
+    },
+    addEnt() {
+      this.$router.push({
+        name: "Form",
+        query: {
+          category: "Entertainment",
+          value: "2000",
         },
-        addEnt() {
-            this.$router.push({
-                name: 'Form',
-                query: {
-                    category: "Entertainment",
-                    value: "2000"
-                }
-            });
-        },
-    }
-}
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
+.fff {
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
 }
-.fade-enter, .fade-leave-to{
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
-.containerList {
-    max-width: 650px;
-    margin-left: 50px;
-    margin-top: 30px;
 
+.containerList {
+  width: 640px;
+  margin-left: 50px;
+  margin-top: 30px;
 }
-.text:first-child{
+
+/* .text:first-child{
     margin-right: -150px;
+} */
+
+.text-menu {
+  margin-bottom: 10px;
 }
 
 .header-menu {
-    display: flex;
-    justify-content: space-between;
-    font-weight: 700;
-    padding-left: 10px;
-
+  font-weight: 700;
+  /* padding-left: 10px; */
 }
 
 .header-menu .text {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 .text {
-    width: 87px;
-    font-size: 13px;
+  width: 87px;
+  font-size: 13px;
+}
+
+.v-btn {
+  background-color: rgb(51, 196, 51);
 }
 
 .addNewCost {
-    padding: 12px;
-    font-size: 16px;
-    text-transform: uppercase;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-left: 20px;
+  text-decoration: none;
+  /* padding: 12px;
+
     color: white;
     background-color: rgb(73, 206, 73);
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 20px;
+
     transition: 0.2s;
-    text-decoration: none;
+     */
 }
 
-.addNewCost:hover {
-    background-color: rgba(73, 206, 73, 0.616);
+.addNewCost__color {
+  color: white;
 }
+
+/* .addNewCost:hover {
+    background-color: rgba(73, 206, 73, 0.616);
+} */
 </style>

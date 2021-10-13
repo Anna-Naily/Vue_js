@@ -110,7 +110,11 @@ export default {
     display: block;
 
 }
+.v-application p {
+    margin:0px;
+     padding: 10px 10px;
 
+}
 .formWindowEl {
     display: flex;
     align-items: center;
