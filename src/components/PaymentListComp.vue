@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="listBlock">
+    <div class="list-block">
       <v-row class="payment-block" v-for="item in renderData" :key="item.id">
         <v-col :cols="2" class="text text-list">{{ item.id }}</v-col>
         <v-col class="text text-list">{{ item.date }}</v-col>
@@ -11,27 +11,27 @@
           class="fas fa-ellipsis-v text-list"
         ></i>
         <div class="comp" v-if="item.id == getId">
-          <MyPlugin :id="windowId" />
+          <MyPlugin :id="item.id" />
         </div>
       </v-row>
     </div>
 
-    <div class="paginationBlock">
-      <i @click="prevPage" class="fas fa-chevron-left paginationEl"></i>
+    <div class="pagination-block">
+      <i @click="prevPage" class="fas fa-chevron-left pagination-block__elem"></i>
       <span
         v-for="n in pageCount"
         :key="n"
         @click="currentPage(n)"
-        class="paginationEl"
+        class="pagination-block__elem"
         >{{ n }}</span
       >
-      <i @click="nextPage" class="fas fa-chevron-right paginationEl"></i>
+      <i @click="nextPage" class="fas fa-chevron-right pagination-block__elem"></i>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import MyPlugin from "./MyPlugin.vue";
 
 export default {
@@ -65,14 +65,14 @@ export default {
     currentPage(number) {
       this.chosenPage = number;
     },
-    ...mapGetters("users", ["getUsers"]),
   },
   computed: {
+    ...mapState("users", ["users"]),
     getId() {
       return this.windowId;
     },
     pageCount() {
-      let pagesLength = this.getUsers().length;
+      let pagesLength = this.users.length;
       let pagesSize = this.size;
       let numberOfPages = Math.ceil(pagesLength / pagesSize);
       let pages = [];
@@ -87,7 +87,7 @@ export default {
         start = this.chosenPage - 1;
       }
       let end = start + this.size;
-      return this.getUsers().slice(start, end);
+      return this.users.slice(start, end);
     },
   },
   mounted() {
@@ -124,7 +124,7 @@ export default {
   top: 35px;
 }
 
-.paginationBlock {
+.pagination-block {
   display: flex;
   justify-content: space-between;
   border: 1px solid rgba(0, 0, 0, 0.075);
@@ -137,13 +137,13 @@ export default {
   margin-left: 15%;
 }
 
-.paginationEl {
+.pagination-block__elem {
   padding-top: 2px;
   cursor: pointer;
   transition: 0.2s;
 }
 
-.paginationEl:hover {
+.pagination-block__elem:hover {
   color: rgb(13, 146, 207);
 }
 

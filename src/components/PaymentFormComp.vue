@@ -1,19 +1,19 @@
 <template>
 <v-app>
-    <div class="formPayment">
+    <div class="form-payment">
         <Category @setCategory="setCategory" />
-        <input type="text" placeholder="Payment amount" class="inputPayment" v-model="value" />
-        <input type="text" placeholder="Payment date" class="inputPayment" v-model="date" />
+        <input type="text" placeholder="Payment amount" class="form-payment__input" v-model="value" />
+        <input type="text" placeholder="Payment date" class="form-payment__input" v-model="date" />
         <v-btn depressed
-        color="primary" class="buttonPayment" @click="addElement">Add</v-btn>
+        color="primary" class="form-payment__btn" @click="addElement">Add</v-btn>
         <v-btn depressed
-        color="primary" class="buttonPayment" @click="closeForm">Close</v-btn>
+        color="primary" class="form-payment__btn" @click="closeForm">Close</v-btn>
     </div>
 </v-app>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 import Category from "./CategoryComp.vue";
 
 export default {
@@ -48,6 +48,7 @@ export default {
       let y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
+    ...mapState("users", ["users"]),
   },
 
   methods: {
@@ -63,8 +64,8 @@ export default {
     //метод, задающий след. id
     getNextId() {
       let nextId = 1;
-      if (this.getUsers().length > 0) {
-        return this.getUsers()[this.getUsers().length - 1].id + 1;
+      if (this.users.length > 0) {
+        return this.users[this.users.length - 1].id + 1;
       } else return nextId;
     },
     closeForm() {
@@ -85,13 +86,12 @@ export default {
       this.category = data;
     },
     ...mapActions("users", ["setNewUser"]),
-    ...mapGetters("users", ["getUsers"]),
   },
 };
 </script>
 
 <style scoped>
-.formPayment {
+.form-payment {
   display: flex;
   flex-direction: column;
   width: 200px;
@@ -99,7 +99,7 @@ export default {
   margin-left: 35%;
 }
 
-.inputPayment {
+.form-payment__input {
   margin-top: 20px;
   padding: 10px;
   border: 1px solid rgb(216, 213, 213);
@@ -107,7 +107,7 @@ export default {
   font-size: 14px;
 }
 
-.buttonPayment {
+.form-payment__btn {
   margin-top: 20px;
   padding: 10px;
   font-size: 16px;
@@ -120,7 +120,7 @@ export default {
   transition: 0.2s;
 }
 
-.buttonPayment:hover {
+.form-payment__btn:hover {
   background-color: rgba(73, 206, 73, 0.616);
 }
 </style>

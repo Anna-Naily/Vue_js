@@ -1,8 +1,9 @@
 const state = {
   users: [],
+  updateFlag: false,
 };
 const getters = {
-  getUsers: (state) => {
+  getUsers: state => {
     return state.users;
   },
 };
@@ -26,14 +27,17 @@ const mutations = {
       }
     }
   },
+  changeFlag(state) {
+    state.updateFlag = !state.updateFlag;
+  },
 };
 const actions = {
   getUsers({ commit }) {
     fetch(
       "https://raw.githubusercontent.com/Anna-Naily/json/main/usersData.json"
     )
-      .then((response) => response.json())
-      .then((res) => {
+      .then(response => response.json())
+      .then(res => {
         commit("setUsers", res);
       });
   },
@@ -45,6 +49,9 @@ const actions = {
   },
   changeUser({ commit }, user) {
     commit("changeUser", user);
+  },
+  changeFlag({ commit }) {
+    commit("changeFlag");
   },
 };
 

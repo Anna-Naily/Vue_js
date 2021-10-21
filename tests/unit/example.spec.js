@@ -2,95 +2,67 @@ import { mount, shallowMount } from "@vue/test-utils";
 import Calculator from "@/components/Calculator.vue";
 
 describe("Calculator.vue", () => {
+  let wrapper;
+  const createComponent = () => {
+    wrapper = mount(Calculator);
+  };
+  const findButtonByText = text =>
+    wrapper.findAll("button").wrappers.find(w => {
+      return w.text() === text;
+    });
+  const findLabelText = text => {
+    return wrapper.findAll("label").wrappers.find(w => {
+      return w.text() === text;
+    });
+  };
+
   it("Ввод данных в полe operand1", () => {
-    const wrapper = mount(Calculator);
+    createComponent();
     const operand1Input = wrapper.find("input[name=operand1]");
     operand1Input.setValue("1");
 
     expect(wrapper.vm.operand1).toBe(1);
   });
   it("Ввод данных в полe operand2", () => {
-    const wrapper = mount(Calculator);
+    createComponent();
     const operand2Input = wrapper.find("input[name=operand2]");
     operand2Input.setValue("1");
 
     expect(wrapper.vm.operand2).toBe(1);
   });
-  it("Получить сумму", () => {
-    const wrapper = mount(Calculator);
-    const operand1Input = wrapper.find("input[name=operand1]");
-    operand1Input.setValue("2");
-    const operand2Input = wrapper.find("input[name=operand2]");
-    operand2Input.setValue("3");
+  it.each`
+    firstNumber | secondNumber | operator                   | expectedResult
+    ${"3"}      | ${"2"}       | ${"+"}                     | ${5}
+    ${"7"}      | ${"2"}       | ${"-"}                     | ${5}
+    ${"4"}      | ${"2"}       | ${"/"}                     | ${2}
+    ${"8"}      | ${"2"}       | ${"*"}                     | ${16}
+    ${"8"}      | ${"2"}       | ${"СТЕПЕНЬ"}               | ${64}
+    ${"9"}      | ${"2"}       | ${"ЦЕЛОЧИСЛЕННОЕ ДЕЛЕНИЕ"} | ${4}
+  `(
+    'Проверка оператора "$operator" с числами $firstNumber и $secondNumber',
+    async ({ firstNumber, secondNumber, operator, expectedResult }) => {
+      createComponent();
+      await findLabelText("Первое значение").trigger("click");
+      await findButtonByText(firstNumber).trigger("click");
 
-    const btn = wrapper.find('button[name="+"]');
-    btn.trigger("click");
+      await findLabelText("Второе значение").trigger("click");
+      await findButtonByText(secondNumber).trigger("click");
 
-    expect(wrapper.vm.result).toBe(5);
-  });
-  it("Получить разность", () => {
-    const wrapper = mount(Calculator);
-    const operand1Input = wrapper.find("input[name=operand1]");
-    operand1Input.setValue("3");
-    const operand2Input = wrapper.find("input[name=operand2]");
-    operand2Input.setValue("2");
+      await findButtonByText(operator).trigger("click");
+      expect(wrapper.vm.result).toBe(expectedResult);
+    }
+  );
 
-    const btn = wrapper.find('button[name="-"]');
-    btn.trigger("click");
-
-    expect(wrapper.vm.result).toBe(1);
-  });
-  it("Получить произведение", () => {
-    const wrapper = mount(Calculator);
-    const operand1Input = wrapper.find("input[name=operand1]");
-    operand1Input.setValue("3");
-    const operand2Input = wrapper.find("input[name=operand2]");
-    operand2Input.setValue("2");
-
-    const btn = wrapper.find('button[name="*"]');
-    btn.trigger("click");
-
-    expect(wrapper.vm.result).toBe(6);
-  });
-  it("Получить результат деления", () => {
-    const wrapper = mount(Calculator);
-    const operand1Input = wrapper.find("input[name=operand1]");
-    operand1Input.setValue("6");
-    const operand2Input = wrapper.find("input[name=operand2]");
-    operand2Input.setValue("2");
-
-    const btn = wrapper.find('button[name="/"]');
-    btn.trigger("click");
-
-    expect(wrapper.vm.result).toBe(3);
-  });
-  it("Получить возведение в степень", () => {
-    const wrapper = mount(Calculator);
-    const operand1Input = wrapper.find("input[name=operand1]");
-    operand1Input.setValue("3");
-    const operand2Input = wrapper.find("input[name=operand2]");
-    operand2Input.setValue("2");
-
-    const btn = wrapper.find('button[name="степень"]');
-    btn.trigger("click");
-
-    expect(wrapper.vm.result).toBe(9);
-  });
-  it("Получить результат целочисленного деления", () => {
-    const wrapper = mount(Calculator);
-    const operand1Input = wrapper.find("input[name=operand1]");
-    operand1Input.setValue("9");
-    const operand2Input = wrapper.find("input[name=operand2]");
-    operand2Input.setValue("2");
-
-    const btn = wrapper.find('button[name="целочисленное деление"]');
-    btn.trigger("click");
-
-    expect(wrapper.vm.result).toBe(4);
-  });
   it("Проверка экранной клавиатуры", () => {
-    let keyboard = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-    const wrapper = mount(Calculator);
+    const wrapper = mount(Calculator, {
+      propsData: {
+        keyboard: [],
+      },
+    });
+    let keyboard = wrapper.vm.keyboard.splice(
+      wrapper.vm.keyboard.length - 2,
+      1
+    );
     let operand1Input = wrapper.find("input[name=operand1]");
     for (let i = 0; i < keyboard.length; i++) {
       operand1Input.setValue("");
@@ -101,7 +73,7 @@ describe("Calculator.vue", () => {
   });
 
   it("Проверка кнопки удаления", () => {
-    const wrapper = mount(Calculator);
+    createComponent();
     let operand1Input = wrapper.find("input[name=operand1]");
     operand1Input.setValue("25");
     const btn = wrapper.find('button[name="delete"]');

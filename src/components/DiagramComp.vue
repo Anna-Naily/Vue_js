@@ -4,13 +4,12 @@
       <div id="container"></div>
     </figure>
     <highcharts :options="highchart"></highcharts>
-    <p v-show="0">{{updateDiagram}} элементов в таблице</p>
   </div>
 </template>
 
 <script>
 import { Chart } from "highcharts-vue";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "Diagram",
   components: {
@@ -81,7 +80,6 @@ export default {
       );
       document.head.appendChild(script4);
     },
-    ...mapGetters("users", ["getUsers"]),
     //метод получения суммы value элементов массива
     getSum(arr) {
       let sum = 0;
@@ -135,13 +133,18 @@ export default {
     },
   },
   computed: {
-    updateDiagram() {
-      this.createArray(this.getUsers());
-      return this.getUsers().length;
+    ...mapState("users", ["users"]),
+    ...mapState("users", ["updateFlag"]),
+  },
+  watch: {
+    users() {
+      this.createArray(this.users);
+    },
+    updateFlag() {
+      this.createArray(this.users);
     },
   },
   mounted() {
-    //this.createArray(this.getUsers());
     this.registrationDiagram();
   },
 };

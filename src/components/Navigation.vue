@@ -2,15 +2,15 @@
 <v-app>
     <v-app-bar class="flex-grow-0" color="primary">
         <v-btn color="white" elevation="4" large plain rounded>
-            <router-link class="addNewCost addNewCost__color text-button" to="/form">ADD NEW COST +</router-link>
+            <router-link class="add-new-cost add-new-cost_color button__text" to="/form">ADD NEW COST +</router-link>
         </v-btn>
-        <v-btn color="white" elevation="4" large plain rounded @click="addFood" class="addNewCost text-button">ADD FOOD</v-btn>
-        <v-btn color="white" elevation="4" large plain rounded @click="addTransport" class="addNewCost text-button">ADD TRANSPORT</v-btn>
-        <v-btn color="white" elevation="4" large plain rounded @click="addEnt" class="addNewCost text-button">ADD ENTERTAINMENT</v-btn>
+        <v-btn color="white" elevation="4" large plain rounded @click="addFood" class="add-new-cost button__text">ADD FOOD</v-btn>
+        <v-btn color="white" elevation="4" large plain rounded @click="addTransport" class="add-new-cost button__text">ADD TRANSPORT</v-btn>
+        <v-btn color="white" elevation="4" large plain rounded @click="addEnt" class="add-new-cost button__text">ADD ENTERTAINMENT</v-btn>
     </v-app-bar>
     <v-main>
       <div class="fff">
-            <div class="containerList">
+            <div class="container-list">
                 <v-row class="header-menu">
                     <v-col :cols="2" class="text text-menu">#</v-col>
                     <v-col :cols="4" class="text text-menu">Date</v-col>
@@ -88,7 +88,7 @@ export default {
   opacity: 0;
 }
 
-.containerList {
+.container-list {
   width: 640px;
   margin-left: 50px;
   margin-top: 30px;
@@ -120,7 +120,7 @@ export default {
   background-color: rgb(51, 196, 51);
 }
 
-.addNewCost {
+.add-new-cost {
   font-size: 16px;
   text-transform: uppercase;
   margin-left: 20px;
@@ -137,11 +137,11 @@ export default {
      */
 }
 
-.addNewCost__color {
+.add-new-cost_color {
   color: white;
 }
 
-/* .addNewCost:hover {
+/* .add-new-cost:hover {
     background-color: rgba(73, 206, 73, 0.616);
 } */
 </style>
