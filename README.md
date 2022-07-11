@@ -1,4 +1,5 @@
-# vueproject
+# Personal finance app (Vue.js)
+
 
 ## Project setup
 ```
